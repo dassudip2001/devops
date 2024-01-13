@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   database:
-    image: mysql:lastest
+    image: mysql:latest
     restart: always
     ports:
       - 3306:3306
@@ -33,4 +33,4 @@ networks:
 
 volumes:
   mysql:
-  external: true
+    external: true
