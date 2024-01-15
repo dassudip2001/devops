@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  lms:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5173:5173
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    command: npm run dev
+    networks:
+      - server_node
+
+networks:
+  server_node:
+    external: true
