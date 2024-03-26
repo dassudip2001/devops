@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-service
+spec:
+  selector:
+    app: users # select the users pod and expose
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users # label by which pod can be selected
+    spec:
+      containers:
+        - name: users-api
+          image: gomurali/k8s-users:latest
+          env:
+            - name: MONGODB_CONNECTION_URI
+              value: "<your_mongo_db_url>"
+            - name: AUTH_API_ADDRESSS
+              value: "auth-service.default:3000"
